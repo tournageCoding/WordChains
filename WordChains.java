@@ -4,6 +4,15 @@
  */
 public class WordChains {
 
+    private static String[] dictionary;
+
+    /**
+     * Initialise the dictionary.
+     */
+    public WordChains(String[] dictionary) {
+        WordChains.dictionary = dictionary;
+    }
+
     /**
      * Call shortestPath() if given two Strings. 
      */
