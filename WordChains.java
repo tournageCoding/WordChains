@@ -76,7 +76,11 @@ public class WordChains {
         return null;
     }
 
-    // probably move this to within word class
+
+    /**
+     * Return true if this.wordsSeen contains the given String input.
+     * Return false otherwise.
+     */
     private boolean wordsSeenConatins(String input) {
         for (String word : this.wordsSeen) {
             if (word.equals(input)) return true;
@@ -84,6 +88,10 @@ public class WordChains {
         return false;
     }
 
+    /**
+     * Returns true if word1 and word2 have a one letter difference.
+     * Returns false otherwise.
+     */
     private boolean oneLetterDifference(String word1, String word2) {
         int numDifferentCharacters = 0;
         if (word1.length() == word2.length()) {
