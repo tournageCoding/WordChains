@@ -49,13 +49,15 @@ public class WordChains {
             String currentWordStr = currentWord.getWord();
             System.out.println("Current word: " + currentWordStr);
             for (String word : WordChains.dictionary) {
-                if (this.oneLetterDifference(word, currentWordStr)) {
+                if (this.oneLetterDifference(word, currentWordStr) &&
+                !this.wordsSeenConatins(word)) {
                     // only do below if word has not been seen before
                     //  && !this.wordsSeenConatins(word)
                     if (word.equals(goal)) {
                         return new Word(word, currentWord);
                     }
                     queue.add(new Word(word, currentWord));
+                    this.wordsSeen.add(word);
                 }
             }
             currentWord = queue.remove();
@@ -74,6 +76,7 @@ public class WordChains {
         return null;
     }
 
+    // probably move this to within word class
     private boolean wordsSeenConatins(String input) {
         for (String word : this.wordsSeen) {
             if (word.equals(input)) return true;

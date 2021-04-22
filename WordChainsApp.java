@@ -8,8 +8,8 @@ public class WordChainsApp {
      * The main method.
      */
     public static void main(String[] args) {
-        String[] dict = {"cat", "cup", "dog", "cap", "cut", "elephant",
-    " get", "got", "hot", "lot", "not", "hat"};
+        String[] dict = {"cat", "not", "lot", "dog", "get", "got", "hot", "lot", "not", "hat",
+    "elephant"};
         new WordChains(dict);
         WordChains test = new WordChains("get", "cat");
     }
