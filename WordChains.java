@@ -95,4 +95,14 @@ public class WordChains {
         }
         return false;
     }
+
+    private String[] oneLetterDifferenceWords(String input) {
+        String[] result = new String[input.length() * 25];
+        for (int letter = 0; letter < input.length(); letter++) {
+            for (int alphabet = 0; alphabet < 26; alphabet++) {
+
+            }
+        }
+        return result;
+    }
 }
