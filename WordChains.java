@@ -26,5 +26,24 @@ public class WordChains {
      */
     private void shortestPath(String start, String end) {
         System.out.println(start + " " + end);
+        for (String word : WordChains.dictionary) {
+            System.out.println(word);
+        }
+        System.out.println();
+        for (String word : WordChains.dictionary) {
+            System.out.println(word + ": " + oneLetterDifference("cat", word));
+        }
+    }
+
+    private boolean oneLetterDifference(String word1, String word2) {
+        int numDifferentCharacters = 0;
+        if (word1.length() == word2.length()) {
+            for (int i = 0; i < word1.length(); i++) {
+                if (word1.charAt(i) != word2.charAt(i)) numDifferentCharacters++;
+                if (numDifferentCharacters > 1) return false;
+            }
+            if (numDifferentCharacters == 1) return true;
+        }
+        return false;
     }
 }
