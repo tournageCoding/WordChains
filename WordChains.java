@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * A class for finding either the shortest path or a path of a set
  * length between two given words (if possible).
@@ -5,6 +7,7 @@
 public class WordChains {
 
     private static String[] dictionary;
+    private ArrayList<String> wordsSeen;
 
     /**
      * Initialise the dictionary.
@@ -21,24 +24,44 @@ public class WordChains {
         // calling method. (return error if a word is in dict)
         // OR faster to jsut call method with them and let tree hit
         // 'impossible'(no solution) condition
-        this.shortestPath(start, new Word(end, null));
+        this.wordsSeen = new ArrayList<String>();
+        this.wordsSeen.add(end);
+        Word result = this.shortestPath(start, new Word(end, null));
+        if (result == null) {
+            System.out.println("impossible");
+        } else {
+            System.out.print(result + " ");
+            while (result.getPredecessor() != null) {
+                result = result.getPredecessor();
+                System.out.print(result + " ");
+            }
+            System.out.println();
+        }
     }
 
     /**
      * Find the shortest word chain (if possible) between the two
      * given words.
      */
-    private void shortestPath(String goal, Word currentWord) {
+    private Word shortestPath(String goal, Word currentWord) {
+        Queue<Word> queue = new LinkedList<Word>();
         for (int i = 0; i < WordChains.dictionary.length; i++) {
+            String currentWordStr = currentWord.getWord();
+            System.out.println("Current word: " + currentWordStr);
             for (String word : WordChains.dictionary) {
-                if (this.oneLetterDifference(word, currentWord.getWord())) {
+                if (this.oneLetterDifference(word, currentWordStr)) {
                     // only do below if word has not been seen before
-                    // queue.add(new Word(word, currentWord))
+                    //  && !this.wordsSeenConatins(word)
+                    if (word.equals(goal)) {
+                        return new Word(word, currentWord);
+                    }
+                    queue.add(new Word(word, currentWord));
                 }
             }
-            //currentWord = queue.get();
+            currentWord = queue.remove();
         }
 
+        /*
         for (String word : WordChains.dictionary) {
             System.out.println(word);
         }
@@ -46,6 +69,16 @@ public class WordChains {
         for (String word : WordChains.dictionary) {
             System.out.println(word + ": " + oneLetterDifference("cat", word));
         }
+        */
+
+        return null;
+    }
+
+    private boolean wordsSeenConatins(String input) {
+        for (String word : this.wordsSeen) {
+            if (word.equals(input)) return true;
+        }
+        return false;
     }
 
     private boolean oneLetterDifference(String word1, String word2) {
