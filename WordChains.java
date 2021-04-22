@@ -17,15 +17,28 @@ public class WordChains {
      * Call shortestPath() if given two Strings. 
      */
     public WordChains(String start, String end) {
-        this.shortestPath(start, end);
+        // what's faster? checking dictionary for two given words before
+        // calling method. (return error if a word is in dict)
+        // OR faster to jsut call method with them and let tree hit
+        // 'impossible'(no solution) condition
+        this.shortestPath(start, new Word(end, null));
     }
 
     /**
      * Find the shortest word chain (if possible) between the two
      * given words.
      */
-    private void shortestPath(String start, String end) {
-        System.out.println(start + " " + end);
+    private void shortestPath(String goal, Word currentWord) {
+        for (int i = 0; i < WordChains.dictionary.length; i++) {
+            for (String word : WordChains.dictionary) {
+                if (this.oneLetterDifference(word, currentWord.getWord())) {
+                    // only do below if word has not been seen before
+                    // queue.add(new Word(word, currentWord))
+                }
+            }
+            //currentWord = queue.get();
+        }
+
         for (String word : WordChains.dictionary) {
             System.out.println(word);
         }
