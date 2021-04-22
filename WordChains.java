@@ -45,14 +45,14 @@ public class WordChains {
      */
     private Word shortestPath(String goal, Word currentWord) {
         Queue<Word> queue = new LinkedList<Word>();
+
         for (int i = 0; i < WordChains.dictionary.length; i++) {
             String currentWordStr = currentWord.getWord();
             System.out.println("Current word: " + currentWordStr);
+
             for (String word : WordChains.dictionary) {
                 if (this.oneLetterDifference(word, currentWordStr) &&
-                !this.wordsSeenConatins(word)) {
-                    // only do below if word has not been seen before
-                    //  && !this.wordsSeenConatins(word)
+                    !this.wordsSeenConatins(word)) {
                     if (word.equals(goal)) {
                         return new Word(word, currentWord);
                     }

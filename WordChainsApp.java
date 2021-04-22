@@ -8,9 +8,9 @@ public class WordChainsApp {
      * The main method.
      */
     public static void main(String[] args) {
-        String[] dict = {"cat", "not", "lot", "dog", "get", "got", "hot", "lot", "not", "hat",
-    "elephant"};
+        String[] dict = {"cat", "not", "lot", "dog", "get", "got", "lot", "not", "hat",
+    "elephant", "car", "bat", "pat", "cod", "far", "fat", "fan", "pet"};
         new WordChains(dict);
-        WordChains test = new WordChains("get", "cat");
+        WordChains test = new WordChains("got", "far");
     }
 }
