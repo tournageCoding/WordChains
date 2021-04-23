@@ -78,20 +78,20 @@ public class WordChains {
 
         while (!stack.empty()) {
             currentWord = stack.pop();
-            String currentWordStr = currentWord.getWord();
-            String[] currentWordNeighbours = this.oneLetterDifferenceWords(currentWordStr);
-            System.out.println("Current word: " + currentWordStr);
-            System.out.println("Depth: " + currentWord.getDepth());
+            if (currentWord.getDepth() < length - 1) {            
+                String currentWordStr = currentWord.getWord();
+                String[] currentWordNeighbours = this.oneLetterDifferenceWords(currentWordStr);
 
-            for (String neighbour : currentWordNeighbours) {
-                if (neighbour.equals(goal) && currentWord.getDepth() + 1 ==
-                length) {
-                    return new Word(neighbour, currentWord);
-                }
-                if (WordChains.dictionary.contains(neighbour)) {
-                    stack.push(new Word(neighbour, currentWord));
-                }
-            }   
+                for (String neighbour : currentWordNeighbours) {
+                    if (neighbour.equals(goal) &&
+                    currentWord.getDepth() == length - 2) {
+                        return new Word(neighbour, currentWord);
+                    }
+                    if (WordChains.dictionary.contains(neighbour)) {
+                        stack.push(new Word(neighbour, currentWord));
+                    }
+                }  
+            } 
         }
         return null;
     }
