@@ -20,13 +20,17 @@ public class WordChains {
      * Call shortestPath() if given two Strings. 
      */
     public WordChains(String start, String end) {
-        // what's faster? checking dictionary for two given words before
-        // calling method. (return error if a word is in dict)
-        // OR faster to jsut call method with them and let tree hit
-        // 'impossible'(no solution) condition
-        this.wordsSeen = new HashSet<String>();
-        this.wordsSeen.add(end);
-        Word result = this.shortestPath(start, new Word(end, null));
+        Word result;
+
+        if (!WordChains.dictionary.contains(start) ||
+            !WordChains.dictionary.contains(end)) {
+            result = null;
+        } else {
+            this.wordsSeen = new HashSet<String>();
+            this.wordsSeen.add(end);
+            result = this.shortestPath(start, new Word(end, null));
+        }    
+
         this.printChain(result);
     }
 
@@ -34,7 +38,15 @@ public class WordChains {
      * Call xLengthPath() if given two strings and an int.
      */
     public WordChains(String start, String end, int length) {
-        Word result = this.xLengthPath(start, new Word(end, null), length);
+        Word result;
+
+        if (!WordChains.dictionary.contains(start) ||
+            !WordChains.dictionary.contains(end)) {
+            result = null;
+        } else {
+            result = this.xLengthPath(start, new Word(end, null), length);
+        }    
+
         this.printChain(result);
     }
 
@@ -50,8 +62,8 @@ public class WordChains {
             currentWord = queue.remove();
             String currentWordStr = currentWord.getWord();
             String[] currentWordNeighbours = this.oneLetterDifferenceWords(currentWordStr);
-            System.out.println("Current word: " + currentWordStr);
-            System.out.println("Depth: " + currentWord.getDepth());
+            //System.out.println("Current word: " + currentWordStr);
+            //System.out.println("Depth: " + currentWord.getDepth());
 
             for (String neighbour : currentWordNeighbours) {
                 if (!this.wordsSeen.contains(neighbour)){
@@ -96,6 +108,10 @@ public class WordChains {
         return null;
     }
 
+    /**
+     * Return an array off all the possible one letter variations
+     * of a given word.
+     */
     private String[] oneLetterDifferenceWords(String input) {
         int i = 0;
         String[] result = new String[input.length() * 25];
@@ -112,6 +128,10 @@ public class WordChains {
         return result;
     }
 
+    /**
+     * Print a word chain by going through the linked list of words
+     * held in the Word.predecessor datafield.
+     */
     private void printChain(Word word) {
         if (word == null) {
             System.out.println("impossible");
