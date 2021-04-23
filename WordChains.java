@@ -6,13 +6,13 @@ import java.util.*;
  */
 public class WordChains {
 
-    private static String[] dictionary;
+    private static HashSet<String> dictionary;
     private ArrayList<String> wordsSeen;
 
     /**
      * Initialise the dictionary.
      */
-    public WordChains(String[] dictionary) {
+    public WordChains(HashSet<String> dictionary) {
         WordChains.dictionary = dictionary;
     }
 
@@ -27,6 +27,7 @@ public class WordChains {
         this.wordsSeen = new ArrayList<String>();
         this.wordsSeen.add(end);
         Word result = this.shortestPath(start, new Word(end, null));
+
         if (result == null) {
             System.out.println("impossible");
         } else {
@@ -45,34 +46,28 @@ public class WordChains {
      */
     private Word shortestPath(String goal, Word currentWord) {
         Queue<Word> queue = new LinkedList<Word>();
+        queue.add(currentWord);
 
-        for (int i = 0; i < WordChains.dictionary.length; i++) {
+        while (!queue.isEmpty()) {
+            currentWord = queue.remove();
             String currentWordStr = currentWord.getWord();
+            String[] currentWordNeighbours = this.oneLetterDifferenceWords(currentWordStr);
             System.out.println("Current word: " + currentWordStr);
 
-            for (String word : WordChains.dictionary) {
-                if (this.oneLetterDifference(word, currentWordStr) &&
-                    !this.wordsSeenConatins(word)) {
-                    if (word.equals(goal)) {
-                        return new Word(word, currentWord);
+            for (String neighbour : currentWordNeighbours) {
+                if (!this.wordsSeenConatins(neighbour)){
+                    if (neighbour.equals(goal)) {
+                        return new Word(neighbour, currentWord);
                     }
-                    queue.add(new Word(word, currentWord));
-                    this.wordsSeen.add(word);
+                    if (WordChains.dictionary.contains(neighbour)) {
+                        queue.add(new Word(neighbour, currentWord));
+                        this.wordsSeen.add(neighbour);
+                    }
                 }
+
             }
-            currentWord = queue.remove();
+            
         }
-
-        /*
-        for (String word : WordChains.dictionary) {
-            System.out.println(word);
-        }
-        System.out.println();
-        for (String word : WordChains.dictionary) {
-            System.out.println(word + ": " + oneLetterDifference("cat", word));
-        }
-        */
-
         return null;
     }
 
@@ -88,28 +83,18 @@ public class WordChains {
         return false;
     }
 
-    /**
-     * Returns true if word1 and word2 have a one letter difference.
-     * Returns false otherwise.
-     */
-    private boolean oneLetterDifference(String word1, String word2) {
-        int numDifferentCharacters = 0;
-        if (word1.length() == word2.length()) {
-            for (int i = 0; i < word1.length(); i++) {
-                if (word1.charAt(i) != word2.charAt(i)) numDifferentCharacters++;
-                if (numDifferentCharacters > 1) return false;
-            }
-            if (numDifferentCharacters == 1) return true;
-        }
-        return false;
-    }
-
     private String[] oneLetterDifferenceWords(String input) {
+        int i = 0;
         String[] result = new String[input.length() * 25];
+        StringBuilder string = new StringBuilder(input);
         for (int letter = 0; letter < input.length(); letter++) {
             for (int alphabet = 0; alphabet < 26; alphabet++) {
-
+                string.setCharAt(letter, (char)(alphabet+97));
+                if (!string.toString().equals(input)) {
+                    result[i++] = string.toString();
+                }
             }
+            string.setCharAt(letter, input.charAt(letter));
         }
         return result;
     }
