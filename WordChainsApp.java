@@ -11,12 +11,12 @@ public class WordChainsApp {
      */
     public static void main(String[] args) {
         String[] dict = {"cat", "not", "lot", "dog", "get", "got", "lot", "not", "hat",
-    "elephant", "car", "bat", "pat", "cod", "far", "fat", "fan", "pet"};
+    "elephant", "car", "bat", "pat", "cod", "far", "fat", "fan", "pet", "hat"};
     HashSet<String> dictSet = new HashSet<String>();
         for (String x : dict) {
             dictSet.add(x);
         }
         new WordChains(dictSet);
-        WordChains test = new WordChains("got", "far");
+        WordChains test = new WordChains("hat", "pat", 5);
     }
 }

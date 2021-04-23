@@ -63,9 +63,7 @@ public class WordChains {
                         this.wordsSeen.add(neighbour);
                     }
                 }
-
-            }
-            
+            }            
         }
         return null;
     }
@@ -75,7 +73,27 @@ public class WordChains {
      * two words.
      */
     private Word xLengthPath(String goal, Word currentWord, int length) {
-        return new Word("hello world", null);
+        Stack<Word> stack = new Stack<Word>();
+        stack.push(currentWord);
+
+        while (!stack.empty()) {
+            currentWord = stack.pop();
+            String currentWordStr = currentWord.getWord();
+            String[] currentWordNeighbours = this.oneLetterDifferenceWords(currentWordStr);
+            System.out.println("Current word: " + currentWordStr);
+            System.out.println("Depth: " + currentWord.getDepth());
+
+            for (String neighbour : currentWordNeighbours) {
+                if (neighbour.equals(goal) && currentWord.getDepth() + 1 ==
+                length) {
+                    return new Word(neighbour, currentWord);
+                }
+                if (WordChains.dictionary.contains(neighbour)) {
+                    stack.push(new Word(neighbour, currentWord));
+                }
+            }   
+        }
+        return null;
     }
 
     private String[] oneLetterDifferenceWords(String input) {
