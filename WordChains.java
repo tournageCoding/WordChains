@@ -71,17 +71,6 @@ public class WordChains {
         return null;
     }
 
-    /**
-     * Return true if this.wordsSeen contains the given String input.
-     * Return false otherwise.
-     */
-    private boolean wordsSeenConatins(String input) {
-        for (String word : this.wordsSeen) {
-            if (word.equals(input)) return true;
-        }
-        return false;
-    }
-
     private String[] oneLetterDifferenceWords(String input) {
         int i = 0;
         String[] result = new String[input.length() * 25];
