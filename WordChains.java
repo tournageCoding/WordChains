@@ -27,17 +27,15 @@ public class WordChains {
         this.wordsSeen = new HashSet<String>();
         this.wordsSeen.add(end);
         Word result = this.shortestPath(start, new Word(end, null));
+        this.printChain(result);
+    }
 
-        if (result == null) {
-            System.out.println("impossible");
-        } else {
-            System.out.print(result + " ");
-            while (result.getPredecessor() != null) {
-                result = result.getPredecessor();
-                System.out.print(result + " ");
-            }
-            System.out.println();
-        }
+    /**
+     * Call xLengthPath() if given two strings and an int.
+     */
+    public WordChains(String start, String end, int length) {
+        Word result = this.xLengthPath(start, new Word(end, null), length);
+        this.printChain(result);
     }
 
     /**
@@ -53,6 +51,7 @@ public class WordChains {
             String currentWordStr = currentWord.getWord();
             String[] currentWordNeighbours = this.oneLetterDifferenceWords(currentWordStr);
             System.out.println("Current word: " + currentWordStr);
+            System.out.println("Depth: " + currentWord.getDepth());
 
             for (String neighbour : currentWordNeighbours) {
                 if (!this.wordsSeen.contains(neighbour)){
@@ -71,6 +70,14 @@ public class WordChains {
         return null;
     }
 
+    /**
+     * Find a word chain of given length (if possible) between the
+     * two words.
+     */
+    private Word xLengthPath(String goal, Word currentWord, int length) {
+        return new Word("hello world", null);
+    }
+
     private String[] oneLetterDifferenceWords(String input) {
         int i = 0;
         String[] result = new String[input.length() * 25];
@@ -85,5 +92,18 @@ public class WordChains {
             string.setCharAt(letter, input.charAt(letter));
         }
         return result;
+    }
+
+    private void printChain(Word word) {
+        if (word == null) {
+            System.out.println("impossible");
+        } else {
+            System.out.print(word + " ");
+            while (word.getPredecessor() != null) {
+                word = word.getPredecessor();
+                System.out.print(word + " ");
+            }
+            System.out.println();
+        }
     }
 }
