@@ -7,7 +7,7 @@ import java.util.*;
 public class WordChains {
 
     private static HashSet<String> dictionary;
-    private ArrayList<String> wordsSeen;
+    private HashSet<String> wordsSeen;
 
     /**
      * Initialise the dictionary.
@@ -24,7 +24,7 @@ public class WordChains {
         // calling method. (return error if a word is in dict)
         // OR faster to jsut call method with them and let tree hit
         // 'impossible'(no solution) condition
-        this.wordsSeen = new ArrayList<String>();
+        this.wordsSeen = new HashSet<String>();
         this.wordsSeen.add(end);
         Word result = this.shortestPath(start, new Word(end, null));
 
@@ -55,7 +55,7 @@ public class WordChains {
             System.out.println("Current word: " + currentWordStr);
 
             for (String neighbour : currentWordNeighbours) {
-                if (!this.wordsSeenConatins(neighbour)){
+                if (!this.wordsSeen.contains(neighbour)){
                     if (neighbour.equals(goal)) {
                         return new Word(neighbour, currentWord);
                     }
@@ -70,7 +70,6 @@ public class WordChains {
         }
         return null;
     }
-
 
     /**
      * Return true if this.wordsSeen contains the given String input.
