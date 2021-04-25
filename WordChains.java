@@ -95,11 +95,14 @@ public class WordChains {
                 String[] currentWordNeighbours = this.oneLetterDifferenceWords(currentWordStr);
 
                 for (String neighbour : currentWordNeighbours) {
-                    if (neighbour.equals(goal) &&
-                    currentWord.getDepth() == length - 2) {
-                        return new Word(neighbour, currentWord);
-                    }
-                    if (WordChains.dictionary.contains(neighbour)) {
+                    if (neighbour.equals(goal)) {
+                        // if neighbour == goal, but depth isn't correct,
+                        // then don't add new Word to stack.
+                        if (currentWord.getDepth() == length - 2) {
+                            return new Word(neighbour, currentWord);
+                        }                
+                    } else if (WordChains.dictionary.contains(neighbour) &&
+                    this.checkPath(currentWord, neighbour)) {
                         stack.push(new Word(neighbour, currentWord));
                     }
                 }  
@@ -126,6 +129,20 @@ public class WordChains {
             string.setCharAt(letter, input.charAt(letter));
         }
         return result;
+    }
+
+    /**
+     * Return true if the input is not in any of the current words
+     * predecessors, otherwise return false.
+     */
+    private boolean checkPath(Word word, String input) {
+        if (word.getWord().equals(input)) return false;
+
+        while (word.getPredecessor() != null) {
+            word = word.getPredecessor();
+            if (word.getWord().equals(input)) return false;
+        }
+        return true;
     }
 
     /**

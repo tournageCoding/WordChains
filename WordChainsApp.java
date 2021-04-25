@@ -17,6 +17,6 @@ public class WordChainsApp {
             dictSet.add(x);
         }
         new WordChains(dictSet);
-        WordChains test = new WordChains("far", "got");
+        WordChains test = new WordChains("pat", "hat", 9);
     }
 }
