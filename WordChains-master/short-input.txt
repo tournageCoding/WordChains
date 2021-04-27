@@ -1,0 +1,14 @@
+cat got
+cat got 10
+
+car
+pet
+got
+bat
+hat
+pat
+get
+cat
+far
+fat
+fan
